@@ -50,6 +50,16 @@ io.on('connection', (socket) => {
       return;
     }
 
+// username checker thingy
+    const usernameTaken = rooms[roomCode].members.some(memberId => {
+      return users[memberId]?.username.toLowerCase() === username.trim().toLowerCase();
+    });
+
+    if (usernameTaken) {
+      socket.emit('join-error', 'Username already taken in this room');
+      return;
+    }
+
     if (socket.currentRoom) {
       socket.leave(socket.currentRoom);
       const oldRoom = socket.currentRoom;

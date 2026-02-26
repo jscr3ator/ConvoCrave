@@ -47,7 +47,7 @@ function showError(msg) {
   errorBox.classList.remove('hidden');
   setTimeout(() => {
     errorBox.classList.add('hidden');
-  }, 3000);
+  }, 3000); 
 }socket.on('room-created', (data) => {
 currentRoom = data.roomCode;
   document.getElementById('roomCodeDisplay').textContent = data.roomCode;

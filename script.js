@@ -89,6 +89,18 @@ socket.on('message', (data) => {
   addMessage(data.username, data.text, data.timestamp);
 });
 
+let typingTimeout;
+document.getElementById('messageInput').addEventListener('input', (e) => {
+  socket.emit('typing', true);
+  clearTimeout(typingTimeout);
+  typingTimeout = setTimeout(() => socket.emit('typing', false), 1000);
+});
+
+socket.on('user-typing', (data) => {
+  const indicator = document.getElementById('typingIndicator');
+  indicator.textContent = data.isTyping ? `${data.username} is typing...` : '';
+});
+
 function addMessage(username, text, timestamp) {
   const messagesDiv = document.getElementById('messages');
   const messageDiv = document.createElement('div');

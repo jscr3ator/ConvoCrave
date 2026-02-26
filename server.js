@@ -91,6 +91,12 @@ io.on('connection', (socket) => {
     console.log(`${username} joined room ${roomCode}`);
   });
 
+  socket.on('typing', (isTyping) => {
+    const room = socket.currentRoom;
+    const user = users[socket.id];
+    if (room && user) socket.to(room).emit('user-typing', { username: user.username, isTyping });
+  });
+
   socket.on('send-message', (data) => {
     const room = socket.currentRoom;
     const user = users[socket.id];

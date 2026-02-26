@@ -4,15 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ConvoCrave</title>
+  <link rel="icon" type="image/png" href="logo.png">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="setup-screen" id="setupScreen">
     <div class="setup-container">
       <h1>ConvoCrave</h1>
-      
-      <!-- Step 1: Username -->
-      <div id="step1">
+            <div id="step1">
         <div class="form-group">
           <label>Enter your username</label>
           <input type="text" id="usernameInput" placeholder="Your name" autocomplete="off">
@@ -22,7 +21,6 @@
         </div>
       </div>
 
-      <!-- Step 2: Create or Join Room -->
       <div id="step2" class="hidden">
         <div class="step-info">Welcome, <strong id="welcomeName"></strong>!</div>
         <div style="margin: 20px 0; display: flex; gap: 10px;">
@@ -30,7 +28,6 @@
           <button onclick="showJoinRoom()" id="joinBtn" style="flex: 1;">Join Room</button>
         </div>
 
-        <!-- Create Room Section -->
         <div id="createRoomSection" class="hidden">
           <p style="font-size: 12px; color: #8b949e; margin-bottom: 12px;">A secure room code will be generated for you to share.</p>
           <div class="button-group">
@@ -38,7 +35,6 @@
           </div>
         </div>
 
-        <!-- Join Room Section -->
         <div id="joinRoomSection" class="hidden">
           <div class="form-group">
             <label>Enter room code</label>
@@ -49,7 +45,6 @@
           </div>
         </div>
 
-        <!-- Room Created Section -->
         <div id="roomCreatedSection" class="hidden">
           <div class="success-message">
             <strong>Room created!</strong><br>Share this code: <strong id="roomCodeDisplay"></strong>
@@ -71,11 +66,15 @@
           <h1>ConvoCrave</h1>
           <div style="font-size: 12px; color: #8b949e;">Code: <strong id="currentRoomCode">-</strong></div>
         </div>
+
+
         <div class="user-count" id="userCount">0 users</div>
       </div>
       <div class="messages" id="messages"></div>
       <div id="typingIndicator" style="padding: 8px 24px; font-size: 12px; color: #8b949e; font-style: italic; min-height: 20px;"></div>
       <div class="input-area">
+        <input type="file" id="imageInput" accept="image/*" style="display: none;">
+        <button onclick="document.getElementById('imageInput').click()" style="flex: 0; padding: 10px 12px;">📤</button>
         <input type="text" id="messageInput" placeholder="Type a message..." autocomplete="off">
         <button onclick="sendMessage()">Send</button>
       </div>
@@ -86,4 +85,5 @@
   <script src="script.js"></script>
 </body>
 </html>
+
 

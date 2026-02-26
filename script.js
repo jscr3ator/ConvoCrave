@@ -86,7 +86,18 @@ socket.on('user-left', (data) => {
 });
 
 socket.on('message', (data) => {
-  addMessage(data.username, data.text, data.timestamp);
+  addMessage(data.username, data.text, data.timestamp, data.image);
+});
+
+document.getElementById('imageInput').addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if (!file || !file.type.startsWith('image/')) return;
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    socket.emit('send-message', { text: '', image: ev.target.result });
+    e.target.value = '';
+  };
+  reader.readAsDataURL(file);
 });
 
 let typingTimeout;
@@ -101,16 +112,18 @@ socket.on('user-typing', (data) => {
   indicator.textContent = data.isTyping ? `${data.username} is typing...` : '';
 });
 
-function addMessage(username, text, timestamp) {
+function addMessage(username, text, timestamp, image) {
   const messagesDiv = document.getElementById('messages');
   const messageDiv = document.createElement('div');
   messageDiv.className = 'message';
+  const imageHtml = image ? `<img src="${image}" style="max-width: 300px; max-height: 300px; border-radius: 8px; margin-top: 4px;">` : '';
   messageDiv.innerHTML = `
     <div>
       <span class="message-author">${username}</span>
       <span class="message-time">${timestamp}</span>
     </div>
-    <div class="message-text">${text}</div>
+    ${text ? `<div class="message-text">${text}</div>` : ''}
+    ${imageHtml}
   `;
   messagesDiv.appendChild(messageDiv);
   messagesDiv.scrollTop = messagesDiv.scrollHeight;

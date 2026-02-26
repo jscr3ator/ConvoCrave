@@ -101,11 +101,12 @@ io.on('connection', (socket) => {
     const room = socket.currentRoom;
     const user = users[socket.id];
 
-    if (!room || !user || !data.text) return;
+    if (!room || !user || (!data.text && !data.image)) return;
 
     io.to(room).emit('message', {
       username: user.username,
       text: data.text,
+      image: data.image,
       timestamp: new Date().toLocaleTimeString()
     });
 
